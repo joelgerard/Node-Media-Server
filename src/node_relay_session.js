@@ -22,6 +22,13 @@ class NodeRelaySession extends EventEmitter {
 
   run() {
     let format = this.conf.ouPath.startsWith('rtsp://') ? 'rtsp' : 'flv';
+    
+    // When this is called and a name is specified, but the name is not used
+    // in the path, ignore the request.
+    if (this.conf.name && this.conf.name != "" && this.conf.inPath.indexOf(this.conf.name) < 0) {
+      Logger.log(`[Joel] return this stream because path was ${this.conf.inPath} and the whole thing looks like ${JSON.stringify(this.conf)}`);
+      return;
+    }
     let argv = ['-re', '-i', this.conf.inPath, '-c', 'copy', '-f', format, this.conf.ouPath];
     if (this.conf.inPath[0] === '/' || this.conf.inPath[1] === ':') {
       argv.unshift('-1');
