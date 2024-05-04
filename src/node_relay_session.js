@@ -30,7 +30,8 @@ class NodeRelaySession extends EventEmitter {
     if (!this.conf.name || this.conf.name == "") {
       return;
     }
-    if (this.conf.name && this.conf.name != "" && this.conf.inPath.indexOf(this.conf.name) < 0) {
+    
+    if (this.conf.name.indexOf("_") > -1 && this.conf.name && this.conf.name != "" && this.conf.inPath.indexOf(this.conf.name) < 0) {
       Logger.log(`[Joel] return this stream because path was ${this.conf.inPath} and the whole thing looks like ${JSON.stringify(this.conf)}`);
       return;
     }
