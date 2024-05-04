@@ -34,6 +34,11 @@ class NodeRelaySession extends EventEmitter {
       Logger.log(`[Joel] return this stream because path was ${this.conf.inPath} and the whole thing looks like ${JSON.stringify(this.conf)}`);
       return;
     }
+
+    if (this.conf.name.indexOf("_") < 0) {
+      this.conf.name = "";
+    }
+
     let argv = ['-re', '-i', this.conf.inPath, '-c', 'copy', '-f', format, this.conf.ouPath];
     if (this.conf.inPath[0] === '/' || this.conf.inPath[1] === ':') {
       argv.unshift('-1');
